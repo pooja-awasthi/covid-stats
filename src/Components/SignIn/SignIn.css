@@ -1,0 +1,8 @@
+.container {
+    width: '400px';
+    margin-left:'700px';
+    margin-top:'90px';
+    height: '90px';
+    align-items: 'center';
+    justify-content: 'center';
+}
