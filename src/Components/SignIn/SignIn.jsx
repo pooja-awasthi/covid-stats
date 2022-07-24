@@ -8,15 +8,12 @@ import CardContent from '@mui/material/CardContent';
 import config from './config.json';
 import style from './SignIn.css'
 
-const SignIn = ({handleAuthentcation}) => {
+const SignIn = ({handleSetAuthentication}) => {
     const googleResponse = async (response) => {
-        console.log("response: ",response)
-
         const tokenBlob = new Blob([JSON.stringify({access_token: response.accessToken}, null, 2)], {type : 'application/json'});
         console.log("response: ",response)
-        localStorage.setItem({ user: tokenBlob});
-
-        handleAuthentcation();
+        localStorage.setItem('user', tokenBlob);
+        handleSetAuthentication();
     };
 
     const onFailure = (error) => {

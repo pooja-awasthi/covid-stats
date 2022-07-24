@@ -5,7 +5,8 @@ import CountryPicker from "./Components/CountryPicker/CountryPicker.jsx";
 import styles from "./App.css";
 import { fetchData } from "./api";
 import SignIn from './Components/SignIn/SignIn.jsx';
-
+import { gapi } from "gapi-script";
+import config from './Components/SignIn/config.json';
 
 function App () {
   const [viewData, setViewData] = useState({
@@ -19,7 +20,11 @@ function App () {
     setIsAuthenticated(true);
   }
 
-
+  gapi.load("client:auth2", () => {
+    gapi.client.init({
+      clientId: config.GOOGLE_CLIENT_ID,
+    });
+  });
 
   useEffect(() => {
     if (localStorage.getItem('user')) {
@@ -61,7 +66,7 @@ function App () {
           <Cards data={viewData.data} country={viewData.country} />
           <ChartView data={viewData.data} country={viewData.country} />
         </div>) :
-        ( <SignIn handleAuthentication = {handleSetAuthentication} /> ) }
+        ( <SignIn handleSetAuthentication = {handleSetAuthentication} /> ) }
       </div>
     );
 }
