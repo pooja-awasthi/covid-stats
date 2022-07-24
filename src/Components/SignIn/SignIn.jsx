@@ -19,16 +19,19 @@ const SignIn = ({handleSetAuthentication}) => {
     const onFailure = (error) => {
     console.log(error);
     };
+
+    
+  const responseFacebook = (response) => {
+    console.log(response);
+    if (response.accessToken) {
+        localStorage.setItem('user', response);
+        handleSetAuthentication();
+    }
+  }
     
   return (
     <div className={style.container}>
-        {/* <FacebookLogin
-        appId={config.FACEBOOK_APP_ID}
-        autoLoad={false}
-        fields="name,email,picture"
-        callback={this.facebookResponse}
-        /> */}
-        <Card sx={{ minWidth: 250 }}>     
+        <Card sx={{ minWidth: 250, maxWidth: 600, height: 250 }}>     
         <CardContent>
             Login with SocialMedia
         </CardContent>
@@ -38,6 +41,16 @@ const SignIn = ({handleSetAuthentication}) => {
             buttonText="Login"
             onSuccess={googleResponse}
             onFailure={onFailure}
+        />
+        </CardActions>
+        <CardActions>
+        <FacebookLogin
+            appId={config.FACEBOOK_APP_ID}
+            autoLoad={false}
+            fields="name,email,picture"
+            scope="public_profile,user_friends"
+            callback={responseFacebook}
+            icon="fa-facebook"
         />
         </CardActions>
         </Card>
